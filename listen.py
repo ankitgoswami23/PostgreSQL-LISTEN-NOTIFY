@@ -1,9 +1,10 @@
 import asyncio
-import psycopg2
+from psycopg2 import connect
+from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 # dbname should be the same for the notifying process
-conn = psycopg2.connect(host="localhost", dbname="example", user="example", password="example")
-conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+conn = connect(host="localhost", dbname="example", user="example", password="example")
+conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
 
 cursor = conn.cursor()
 cursor.execute(f"LISTEN match_updates;")
